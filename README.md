@@ -13,6 +13,21 @@ differences from the original. Reports help a lot (see Feedback below).
 
 OpenSpore is not made or endorsed by Maxis or Electronic Arts.
 
+## Screenshots
+
+| Main menu | Cell stage |
+|---|---|
+| ![The main menu over the galaxy](docs/screenshots/menu.jpg) | ![A cell in the tide pool](docs/screenshots/cell.jpg) |
+| **Creature stage** | **Tribal stage** |
+| ![Creatures at their nest](docs/screenshots/creature.jpg) | ![A tribe's village](docs/screenshots/tribal.jpg) |
+| **Civilization stage** | **Space stage** |
+| ![A city on the home planet](docs/screenshots/civilization.jpg) | ![The home star system](docs/screenshots/space.jpg) |
+| **Creature Creator** | **Cell Creator** |
+| ![Painting a creature](docs/screenshots/creature-creator.jpg) | ![Adding parts to a cell](docs/screenshots/cell-creator.jpg) |
+
+Taken with OpenSpore 0.73.0 at 1920x1080. The art is Spore's own, read from an
+installed copy of the game.
+
 ## Play
 
 **Requirements:** Windows 10 or 11 (64-bit) with a Vulkan-capable graphics
