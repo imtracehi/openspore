@@ -63,11 +63,15 @@ settings. It never touches your Spore installation.
 
 Feedback
 --------
-Please report bugs, crashes and differences from the original game on the
-project's GitHub Issues page. Helpful details: your Windows version, graphics
-card, which version of Spore you own (Steam / EA / GOG / disc), what you did
-and what you saw. If OpenSpore cannot find your Spore install, include the
-output of:
+Please report bugs, crashes and differences from the original game at
+
+  https://github.com/imtracehi/openspore/issues/new/choose
+
+and pick "Bug report" or "Difference from the original Spore". The forms ask
+for your OpenSpore version, Windows version, graphics card, which Spore you own
+(Steam / EA / GOG / disc), what you did and what you saw, and the text in
+OpenSpore's console window. If OpenSpore cannot find your Spore install,
+include the output of:
   openspore.exe --detect-spore
 
 

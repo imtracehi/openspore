@@ -1,0 +1,91 @@
+name: Difference from the original Spore
+description: Something that works, but looks, sounds or plays differently from the original game.
+title: "[Difference] "
+labels: ["parity"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        OpenSpore aims to match the original Spore exactly: visuals, gameplay, menus and audio. Reports like this are how the remaining differences get found.
+        If something is broken (a crash, a freeze, missing graphics), use the **Bug report** form instead.
+
+  - type: input
+    id: version
+    attributes:
+      label: OpenSpore version
+      description: Shown in the console window when OpenSpore starts ("OpenSpore 0.73.0 | ...").
+      placeholder: "0.73.0"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Where
+      multiple: true
+      options:
+        - Main menu, Sporepedia or other menus
+        - Cell stage
+        - Creature stage
+        - Tribal stage
+        - Civilization stage
+        - Space stage
+        - An editor (cell, creature, outfit, building, vehicle, ship)
+        - Somewhere else
+    validations:
+      required: true
+
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Kind of difference
+      multiple: true
+      options:
+        - Looks different (models, colours, effects, lighting)
+        - Sounds different (music, sound effects, voices)
+        - Plays differently (rules, AI, balance, timing)
+        - Camera or controls
+        - Menus, HUD or text
+        - Something from the original is missing
+        - Something else
+    validations:
+      required: true
+
+  - type: textarea
+    id: original
+    attributes:
+      label: In the original Spore
+      description: What the original game does.
+    validations:
+      required: true
+
+  - type: textarea
+    id: openspore
+    attributes:
+      label: In OpenSpore
+      description: What OpenSpore does instead.
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: How to see it
+      description: Where to go or what to do to see the difference.
+
+  - type: dropdown
+    id: sure
+    attributes:
+      label: How you know the original does this
+      options:
+        - I checked in the original game for this report
+        - From a video or screenshot of the original (link below)
+        - From memory
+    validations:
+      required: true
+
+  - type: textarea
+    id: media
+    attributes:
+      label: Screenshots, video or links
+      description: Side-by-side pictures of the original and OpenSpore help the most. Drag files here or paste links.

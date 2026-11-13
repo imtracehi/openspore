@@ -41,11 +41,17 @@ asks before deleting your saves and never touches your Spore installation.
 
 ## Feedback
 
-Please report bugs, crashes and differences from the original game in
-[Issues](../../issues). Helpful details: your Windows version, graphics card,
-which Spore you own (Steam / EA / GOG / disc), what you did and what you saw.
-If OpenSpore cannot find your Spore install, include the output of
-`openspore.exe --detect-spore`.
+Please report problems in [Issues](../../issues/new/choose), using one of two
+forms:
+
+- **Bug report**: a crash, a freeze, or something that does not work.
+- **Difference from the original Spore**: something that works, but looks,
+  sounds or plays differently from the original game.
+
+The forms ask for the details that help most: your OpenSpore version, Windows
+version, graphics card, which Spore you own, and the text in OpenSpore's
+console window. If OpenSpore cannot find your Spore install, include the output
+of `openspore.exe --detect-spore`.
 
 ## Command line
 

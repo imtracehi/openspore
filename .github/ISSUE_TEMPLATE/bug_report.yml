@@ -1,0 +1,141 @@
+name: Bug report
+description: A crash, freeze, or something that does not work in OpenSpore.
+title: "[Bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for testing OpenSpore! One problem per report, please.
+        If something works but looks, sounds or plays differently from the original Spore, use the **Difference from the original Spore** form instead.
+
+  - type: input
+    id: version
+    attributes:
+      label: OpenSpore version
+      description: Shown in the console window when OpenSpore starts ("OpenSpore 0.73.0 | ...") and in the release you downloaded.
+      placeholder: "0.73.0"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: build
+    attributes:
+      label: How you run OpenSpore
+      options:
+        - Setup (installer)
+        - Portable zip
+        - Built from source
+    validations:
+      required: true
+
+  - type: dropdown
+    id: spore
+    attributes:
+      label: Your copy of Spore
+      options:
+        - Steam
+        - EA app / Origin
+        - GOG
+        - Disc
+        - Other / not sure
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: content
+    attributes:
+      label: Installed Spore add-ons
+      description: Tick the ones installed in the Spore folder OpenSpore uses.
+      options:
+        - label: Galactic Adventures
+        - label: Creepy & Cute Parts Pack
+        - label: Bot Parts Pack
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Where it happened
+      multiple: true
+      options:
+        - Setup / installing
+        - Finding the Spore folder
+        - Main menu, Sporepedia or other menus
+        - Cell stage
+        - Creature stage
+        - Tribal stage
+        - Civilization stage
+        - Space stage
+        - An editor (cell, creature, outfit, building, vehicle, ship)
+        - Saving or loading
+        - Somewhere else
+    validations:
+      required: true
+
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Kind of problem
+      options:
+        - OpenSpore does not start
+        - Crash (OpenSpore closes)
+        - Freeze or hang
+        - Missing or broken graphics
+        - Missing or broken sound
+        - Gameplay or controls bug
+        - Slow / low frame rate
+        - Something else
+    validations:
+      required: true
+
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: What you saw, and what you expected instead.
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to make it happen again
+      description: As exact as you can. Say if it happens every time or only sometimes.
+      placeholder: |
+        1. Start a new Creature stage game from the main menu
+        2. Swim to the nest and press E
+        3. ...
+
+  - type: input
+    id: windows
+    attributes:
+      label: Windows version
+      placeholder: "Windows 11 24H2"
+    validations:
+      required: true
+
+  - type: input
+    id: gpu
+    attributes:
+      label: Graphics card and driver version
+      placeholder: "NVIDIA GeForce RTX 3060, driver 566.36"
+    validations:
+      required: true
+
+  - type: textarea
+    id: console
+    attributes:
+      label: Console output
+      description: |
+        OpenSpore opens a console window next to the game. Copy its last lines (or all of it) here.
+        If the window closes before you can copy it, open Command Prompt and start OpenSpore from there, so the text stays:
+        `"%LOCALAPPDATA%\Programs\OpenSpore\openspore.exe"` (setup), or the path to `openspore.exe` in your portable folder.
+        If OpenSpore cannot find your Spore folder, paste the output of `openspore.exe --detect-spore` instead.
+        Paths in the output may include your Windows user name; you can replace it with `USER`.
+      render: text
+
+  - type: textarea
+    id: media
+    attributes:
+      label: Screenshots or video
+      description: Drag images or a short video here. Optional, but they help a lot for graphics problems.
