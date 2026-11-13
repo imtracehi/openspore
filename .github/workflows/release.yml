@@ -1,0 +1,87 @@
+# Release: on a version tag (v0.73.0), build OpenSpore on Windows, run the
+# unit tests that need no Spore install, build the portable zip and the setup
+# exe, and attach them to a GitHub Release. OpenSpore ships no game files.
+# Run it by hand (Actions > release > Run workflow) for a test build: the same
+# steps, with the files uploaded as a workflow artifact and no Release made.
+name: release
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: windows-latest
+    timeout-minutes: 300
+    env:
+      CARGO_TERM_COLOR: always
+      # No player install on the runner: tests that need Spore are #[ignore]d;
+      # the rest must not find or ask for one.
+      OPENSPORE_NO_AUTODETECT: '1'
+      OPENSPORE_NO_DIALOGS: '1'
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Rust toolchain
+        shell: pwsh
+        run: |
+          rustup toolchain install stable --profile minimal --no-self-update
+          rustup default stable
+          rustc --version
+
+      - name: Tag matches Cargo.toml version
+        if: startsWith(github.ref, 'refs/tags/')
+        shell: pwsh
+        run: |
+          $version = (Select-String -Path Cargo.toml -Pattern '^version\s*=\s*"([^"]+)"' | Select-Object -First 1).Matches[0].Groups[1].Value
+          if ("v$version" -ne "${{ github.ref_name }}") { throw "tag ${{ github.ref_name }} does not match Cargo.toml version $version" }
+
+      - name: Unit tests (no Spore install needed)
+        shell: pwsh
+        run: cargo test --release --locked --bin openspore
+
+      - name: Inno Setup
+        shell: pwsh
+        run: |
+          if (-not (Test-Path "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe")) {
+            choco install innosetup --yes --no-progress
+          }
+
+      - name: Build release, zip and setup
+        shell: pwsh
+        run: powershell -NoProfile -ExecutionPolicy Bypass -File installer\build-release.ps1
+
+      - name: Check staging
+        shell: pwsh
+        run: powershell -NoProfile -ExecutionPolicy Bypass -File installer\test-build-release.ps1 -ExePath target\release\openspore.exe
+
+      - name: Upload test build
+        if: ${{ !startsWith(github.ref, 'refs/tags/') }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: openspore-test-build
+          path: |
+            dist/*-portable.zip
+            dist/*-setup.exe
+            dist/SHA256SUMS.txt
+          retention-days: 14
+
+      - name: GitHub Release
+        if: startsWith(github.ref, 'refs/tags/')
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $files = @(Get-ChildItem dist -File | Where-Object { $_.Name -match '-portable\.zip$|-setup\.exe$|^SHA256SUMS\.txt$' } | ForEach-Object { $_.FullName })
+          if ($files.Count -lt 3) { throw "expected zip, setup exe and SHA256SUMS.txt in dist, found: $($files -join ', ')" }
+          $notes = @(
+            'OpenSpore needs your own installed copy of Spore (Steam / EA / GOG / disc); it ships no game files.',
+            '',
+            'Download the setup exe (recommended) or the portable zip, run it and point it at your Spore folder.',
+            'Please report problems in GitHub Issues.'
+          ) -join "`n"
+          gh release create "${{ github.ref_name }}" @files --title "OpenSpore ${{ github.ref_name }}" --notes $notes --prerelease

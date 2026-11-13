@@ -1,0 +1,29 @@
+# This repository holds only what is needed to build, test and package
+# OpenSpore. Everything else that may sit in a working folder (build output,
+# local settings and saves, research notes, tools, and any file extracted
+# from a Spore install) stays out: ignore everything, then list what is kept.
+/*
+!/.gitignore
+!/.github/
+!/Cargo.toml
+!/Cargo.lock
+!/LICENSE
+!/README.md
+!/installer/
+!/src/
+
+# Inside the kept folders
+/installer/Output/
+/src/+editor.rs
+
+# OpenSpore ships no game files. Never commit Spore packages or anything
+# extracted from them, wherever they end up.
+*.package
+*.wav
+*.mp3
+*.rw4
+*.gmdl
+*.obj
+*.dds
+*.png
+*.bin
