@@ -79,9 +79,14 @@ jobs:
           $files = @(Get-ChildItem dist -File | Where-Object { $_.Name -match '-portable\.zip$|-setup\.exe$|^SHA256SUMS\.txt$' } | ForEach-Object { $_.FullName })
           if ($files.Count -lt 3) { throw "expected zip, setup exe and SHA256SUMS.txt in dist, found: $($files -join ', ')" }
           $notes = @(
-            'OpenSpore needs your own installed copy of Spore (Steam / EA / GOG / disc); it ships no game files.',
+            'Early test build. OpenSpore needs your own installed copy of Spore (Steam / EA / GOG / disc); it ships no game files.',
             '',
             'Download the setup exe (recommended) or the portable zip, run it and point it at your Spore folder.',
-            'Please report problems in GitHub Issues.'
+            'Requirements: Windows 10 / 11 (64-bit) with a Vulkan-capable graphics card.',
+            '',
+            'The files are not code-signed yet, so Windows SmartScreen may say "Windows protected your PC": choose More info > Run anyway.',
+            'SHA256SUMS.txt lists the checksums of the downloads.',
+            '',
+            'Please report bugs, crashes and differences from the original game in GitHub Issues.'
           ) -join "`n"
           gh release create "${{ github.ref_name }}" @files --title "OpenSpore ${{ github.ref_name }}" --notes $notes --prerelease

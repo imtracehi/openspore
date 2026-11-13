@@ -33,6 +33,9 @@ The Spore folder is the one that contains the "Data" folder, for example:
   C:\Program Files (x86)\Electronic Arts\SPORE
 You may also pick its Data or SporebinEP1 folder.
 
+The downloads are not code-signed yet, so Windows SmartScreen may show
+"Windows protected your PC": choose More info, then Run anyway.
+
 
 First start / changing the Spore folder
 ---------------------------------------

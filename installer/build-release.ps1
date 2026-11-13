@@ -176,5 +176,6 @@ if ($Iscc) {
 $sums = foreach ($o in $outputs) {
     '{0}  {1}' -f (Get-FileHash -LiteralPath $o -Algorithm SHA256).Hash.ToLower(), (Split-Path $o -Leaf)
 }
-[IO.File]::WriteAllLines((Join-Path $OutDir 'SHA256SUMS.txt'), [string[]]$sums)
+# LF line endings, so `sha256sum -c SHA256SUMS.txt` also works on Linux / WSL.
+[IO.File]::WriteAllText((Join-Path $OutDir 'SHA256SUMS.txt'), (($sums -join "`n") + "`n"))
 Write-Host "Wrote $(Join-Path $OutDir 'SHA256SUMS.txt')"

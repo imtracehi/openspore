@@ -26,6 +26,8 @@ portable zip from [Releases](../../releases).
   shows the Spore folder it found; check it (or click Browse) and continue.
 - The portable zip runs from any folder and keeps its settings and saves next
   to `openspore.exe`.
+- The downloads are not code-signed yet, so Windows SmartScreen may show
+  "Windows protected your PC": choose More info, then Run anyway.
 
 The Spore folder is the one that contains the `Data` folder, for example
 `...\Steam\steamapps\common\Spore` or `C:\Program Files (x86)\Electronic Arts\SPORE`.
