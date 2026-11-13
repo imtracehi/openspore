@@ -32,6 +32,7 @@ mod audio;
 mod baked_model;
 mod bitmap;
 mod body;
+mod branding;
 mod cell;
 mod cell_ai;
 mod cell_body;
@@ -5878,6 +5879,7 @@ fn configure_game(app: &mut App, saved: RunProgress) -> &mut App {
         .add_plugins(space_universe::SpaceUniversePlugin)
         .add_plugins(space_endgame::SpaceEndgamePlugin)
         .add_plugins(front_end::FrontEndPlugin)
+        .add_plugins(branding::BrandingPlugin)
         .add_plugins(cell_editor::CellEditorPlugin)
         .add_plugins(creature_editor::CreatureEditorPlugin)
         .add_plugins(outfitter::OutfitterPlugin)

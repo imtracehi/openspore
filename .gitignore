@@ -28,3 +28,6 @@
 *.dds
 *.png
 *.bin
+
+# OpenSpore's own logo (drawn for OpenSpore, not taken from Spore)
+!/src/branding/openspore-logo.png

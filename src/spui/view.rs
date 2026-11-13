@@ -632,7 +632,8 @@ fn import_texture(
         return Err(format!("resource type {:08X} is not a native PNG", key.type_id));
     }
     let bytes = index.read(key)?;
-    let (width, height, rgba) = crate::ui_art::decode_png(&bytes)?;
+    let (width, height, mut rgba) = crate::ui_art::decode_png(&bytes)?;
+    crate::branding::patch_texture(key, width, height, &mut rgba);
     let image = Image::new(
         bevy::render::render_resource::Extent3d {
             width,

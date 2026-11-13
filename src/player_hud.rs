@@ -959,7 +959,7 @@ fn diet_choice(parent: &mut ChildSpawnerCommands) {
 
 pub fn update(
     mut commands: Commands,
-    (state, run, editor, options, originals, encounter, space_view, galaxy, mobility): (
+    (state, run, editor, options, originals, encounter, space_view, galaxy, mobility, logo): (
         Res<State<GameStage>>,
         Res<RunProgress>,
         Res<crate::editor::EditorState>,
@@ -969,6 +969,7 @@ pub fn update(
         Option<Res<crate::space_view::SpaceView>>,
         Option<Res<crate::space_galaxy::Galaxy>>,
         Option<Res<crate::creature::mobility::CreatureMobility>>,
+        Option<Res<crate::branding::Logo>>,
     ),
     roots: Query<Entity, With<HudRoot>>,
     camera: Query<Entity, With<crate::GameCamera>>,
@@ -1062,14 +1063,10 @@ pub fn update(
                 return;
             }
             if *stage == GameStage::MainMenu {
-                if let Some(logo) = originals
-                    .ui_art
-                    .textures
-                    .iter()
-                    .find(|t| t.name == "title-logo")
-                {
+                // The title: OpenSpore's logo where this menu drew the retail
+                // `title-logo` wordmark (`branding`).
+                if let Some(logo) = logo.as_deref() {
                     ui.spawn((
-                        NativeHudArt(logo.source),
                         ImageNode::new(logo.image.clone()),
                         Node {
                             position_type: PositionType::Absolute,
@@ -1077,7 +1074,7 @@ pub fn update(
                             left: Val::Percent(50.),
                             margin: UiRect::left(Val::Px(-260.)),
                             width: Val::Px(520.),
-                            height: Val::Px(520. * logo.height as f32 / logo.width as f32),
+                            height: Val::Px(520. * logo.size[1] as f32 / logo.size[0] as f32),
                             ..default()
                         },
                     ));

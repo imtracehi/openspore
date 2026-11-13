@@ -1,4 +1,4 @@
-# OpenSpore
+<h1 align="center"><img src="src/branding/openspore-logo.png" alt="OpenSpore" width="560"></h1>
 
 OpenSpore is an open-source re-creation of the game engine of Spore (2008),
 written in Rust with the [Bevy](https://bevyengine.org/) engine. Like

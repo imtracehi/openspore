@@ -593,7 +593,8 @@ pub fn import_png(
         ));
     }
     let bytes = index.read(source)?;
-    let (width, height, rgba) = decode_png(&bytes)?;
+    let (width, height, mut rgba) = decode_png(&bytes)?;
+    crate::branding::patch_texture(source, width, height, &mut rgba);
     let image = Image::new(
         Extent3d {
             width,
