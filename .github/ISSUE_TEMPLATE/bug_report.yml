@@ -13,8 +13,8 @@ body:
     id: version
     attributes:
       label: OpenSpore version
-      description: Shown in the console window when OpenSpore starts ("OpenSpore 0.73.0 | ...") and in the release you downloaded.
-      placeholder: "0.73.0"
+      description: Shown in the console window when OpenSpore starts ("OpenSpore 0.73.1 | ...") and in the release you downloaded.
+      placeholder: "0.73.1"
     validations:
       required: true
 

@@ -25,7 +25,7 @@ OpenSpore is not made or endorsed by Maxis or Electronic Arts.
 | **Creature Creator** | **Cell Creator** |
 | ![Painting a creature](docs/screenshots/creature-creator.jpg) | ![Adding parts to a cell](docs/screenshots/cell-creator.jpg) |
 
-Taken with OpenSpore 0.73.0 at 1920x1080. The art is Spore's own, read from an
+Taken with OpenSpore 0.73 at 1920x1080. The art is Spore's own, read from an
 installed copy of the game.
 
 ## Play

@@ -1,6 +1,6 @@
 [package]
 name = "openspore"
-version = "0.73.0"
+version = "0.73.1"
 edition = "2021"
 description = "OpenSpore - open-source Bevy engine that requires the original Spore assets (OpenRCT2 model)"
 license = "GPL-3.0-or-later"
