@@ -54,11 +54,13 @@ folder" (or run `openspore.exe --choose-spore`).
 in `%LOCALAPPDATA%\OpenSpore` (portable mode: next to the exe). Uninstalling
 asks before deleting your saves and never touches your Spore installation.
 
-**Controller:** an Xbox (XInput) controller works in the stages, the editors
-and the menus. OpenSpore switches to it as soon as you press a button or move
-a stick and shows the current screen's controls as button prompts (hold View
-to list them all). Use the mouse or keyboard to switch back. Typing names
-still needs the keyboard.
+**Controller (experimental):** an Xbox (XInput) controller works in the
+stages, the editors and the menus. OpenSpore switches to it as soon as you
+press a button or move a stick and shows the current screen's controls as
+button prompts (hold View to list them all). Use the mouse or keyboard to
+switch back. Typing names still needs the keyboard. Controller support is new
+and needs more testing, so please report anything that does not work (see
+Feedback below).
 
 ## Feedback
 
