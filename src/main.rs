@@ -33,6 +33,7 @@ mod baked_model;
 mod bitmap;
 mod body;
 mod branding;
+mod controller;
 mod cell;
 mod cell_ai;
 mod cell_body;
@@ -5727,6 +5728,8 @@ fn main() {
 }
 
 fn add_startup(app: &mut App) {
+    // Xbox controller support (controller.rs): the window app and captures.
+    app.add_plugins(controller::ControllerPlugin);
     app.add_plugins(game_audio::GameAudioPlugin);
     app.add_plugins(cell_audio::CellAudioPlugin);
     app.add_plugins(audio_audit::AuditAudioPlugin);

@@ -47,6 +47,15 @@ You can also start it with a folder given directly:
   openspore.exe --spore-path "D:\Games\Spore"
 
 
+Controller
+----------
+An Xbox (XInput) controller works in the stages, the editors and the menus.
+OpenSpore switches to it as soon as you press a button or move a stick, and
+shows the controls of the current screen as button prompts. Hold View to see
+every control. Use the mouse or keyboard to switch back. Typing names still
+needs the keyboard.
+
+
 Where OpenSpore keeps your files
 --------------------------------
   Settings (the linked Spore folder):  %APPDATA%\OpenSpore\settings.json

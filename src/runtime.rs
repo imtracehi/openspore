@@ -1582,6 +1582,13 @@ pub fn run_quick_capture(output: &Path) {
             ..default()
         })
         .id();
+    // A scripted controller (`--pad` / `--stick`) points with the window
+    // cursor, which the SPUI layouts read from the primary window.
+    if !crate::controller::script::parse(&args).is_empty() {
+        world
+            .entity_mut(input_window)
+            .insert(bevy::window::PrimaryWindow);
+    }
     for name in stages {
         let stage = match name {
             "cell" => GameStage::Cell,
@@ -1700,6 +1707,9 @@ pub fn run_quick_capture(output: &Path) {
                         });
                 }
             }
+            // `--pad BUTTON@FRAME` / `--stick l|r:X,Y@FIRST-LAST`: a virtual
+            // Xbox controller (controller/script.rs).
+            crate::controller::script::capture_step(&mut app, &args, i);
             for (notches, at) in &wheels {
                 if i == *at {
                     app.world_mut()

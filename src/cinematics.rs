@@ -316,7 +316,14 @@ impl Plugin for CinematicsPlugin {
             .add_message::<CinematicMessage>()
             .add_message::<AudioParamSet>()
             .add_message::<PlayCinematic>()
-            .add_systems(PreUpdate, host::input_gate.after(bevy::input::InputSystems))
+            .add_systems(
+                PreUpdate,
+                // After the controller's injected input, so that a cinematic
+                // swallows (or is skipped by) pad input like the keyboard's.
+                host::input_gate
+                    .after(bevy::input::InputSystems)
+                    .after(crate::controller::ControllerSystems::Drive),
+            )
             .add_systems(
                 Update,
                 (
