@@ -796,7 +796,9 @@ pub fn advance_stage_clock(world: &mut World) {
     if !matches!(stage, GameStage::Tribal | GameStage::Civilization) || !world.contains_resource::<crate::planet_render::PlanetRender>() {
         return;
     }
-    let dt = world.get_resource::<Time>().map_or(0.0, |t| t.delta_secs());
+    // `setTime -speed` (cheats) scales the clock.
+    let speed = world.get_resource::<crate::cheats::DaySpeed>().map_or(1.0, |s| s.0);
+    let dt = world.get_resource::<Time>().map_or(0.0, |t| t.delta_secs()) * speed;
     let mut clock = world
         .get_resource::<StageClock>()
         .cloned()

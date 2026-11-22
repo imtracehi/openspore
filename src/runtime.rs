@@ -1475,6 +1475,9 @@ pub fn run_quick_capture(output: &Path) {
                 "home" => KeyCode::Home,
                 "end" => KeyCode::End,
                 "f6" => KeyCode::F6,
+                // The cheat console and debug menu (cheats.rs).
+                "f10" => KeyCode::F10,
+                "backquote" => KeyCode::Backquote,
                 _ => return None,
             };
             let (first, last) = match at.split_once('-') {
@@ -1485,6 +1488,16 @@ pub fn run_quick_capture(output: &Path) {
                 }
             };
             Some((code, first, last))
+        })
+        .collect();
+    // `--type TEXT@FRAME` (repeatable) types TEXT into the cheat console,
+    // one character per frame from FRAME (`--press enter@N` runs it).
+    let typing: Vec<(Vec<char>, usize)> = args
+        .windows(2)
+        .filter(|w| w[0] == "--type")
+        .filter_map(|w| {
+            let (text, at) = w[1].rsplit_once('@')?;
+            Some((text.chars().collect(), at.parse().ok()?))
         })
         .collect();
     // `--wheel N@FRAME` (repeatable) scrolls the mouse wheel by N notches
@@ -1702,6 +1715,21 @@ pub fn run_quick_capture(output: &Path) {
                                 bevy::input::ButtonState::Released
                             },
                             text: None,
+                            repeat: false,
+                            window: input_window,
+                        });
+                }
+            }
+            for (text, at) in &typing {
+                if let Some(c) = i.checked_sub(*at).and_then(|k| text.get(k)) {
+                    let s = c.to_string();
+                    app.world_mut()
+                        .resource_mut::<Messages<bevy::input::keyboard::KeyboardInput>>()
+                        .write(bevy::input::keyboard::KeyboardInput {
+                            key_code: KeyCode::Unidentified(bevy::input::keyboard::NativeKeyCode::Unidentified),
+                            logical_key: bevy::input::keyboard::Key::Character(s.clone().into()),
+                            state: bevy::input::ButtonState::Pressed,
+                            text: Some(s.into()),
                             repeat: false,
                             window: input_window,
                         });

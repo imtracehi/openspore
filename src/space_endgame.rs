@@ -124,7 +124,7 @@ impl EndgameState {
         self.specials.iter().any(|s| s == id)
     }
 
-    fn add_special(&mut self, id: &str) -> bool {
+    pub(crate) fn add_special(&mut self, id: &str) -> bool {
         if self.has_special(id) {
             return false;
         }

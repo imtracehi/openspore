@@ -1422,7 +1422,11 @@ fn scene_light_and_effects(
     mut room: Query<&mut Visibility, With<crate::editor_environment::EditorEnvironmentSurface>>,
     mut cameras: Query<&mut Camera, With<crate::GameCamera>>,
     originals: Res<Originals>,
+    cheats: Option<Res<crate::cheats::CheatState>>,
 ) {
+    // `toggleEditorBackground` (cheats): the room is hidden on a plain
+    // background.
+    let bare = cheats.as_ref().is_some_and(|c| c.editor_background_off);
     // Test Drive backgrounds are effects + lighting + environment models: the
     // `editor_*_mode_entry` effects hold two gameModel blocks, a ground plane
     // (`ce_beach_ground_plane-<bg>`, world 0) and a backdrop of the editor
@@ -1437,7 +1441,7 @@ fn scene_light_and_effects(
     let backgrounds = data.backgrounds_of(editor.kind);
     let room_on = editor.mode != Mode::Play
         || backgrounds.get(editor.play.background).is_none_or(|b| b.order == 0);
-    let want = if room_on { Visibility::Inherited } else { Visibility::Hidden };
+    let want = if room_on && !bare { Visibility::Inherited } else { Visibility::Hidden };
     // The backdrop's own models (the `..._background` gameModel of the editor
     // background world) draw instead of the room.
     crate::swarm_fx::game_model::set_editor_backdrop(!room_on);
@@ -1447,7 +1451,7 @@ fn scene_light_and_effects(
         }
     }
     if let Some(mut camera) = cameras.iter_mut().next() {
-        let clear = if room_on {
+        let clear = if room_on && !bare {
             editor.saved.clear.clone().unwrap_or_default()
         } else {
             ClearColorConfig::Custom(Color::BLACK)

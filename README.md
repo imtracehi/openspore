@@ -62,6 +62,15 @@ switch back. Typing names still needs the keyboard. Controller support is new
 and needs more testing, so please report anything that does not work (see
 Feedback below).
 
+**Cheats and debug menu:** Ctrl+Shift+C (or the `` ` `` key) opens Spore's
+cheat console with the original cheats (`addDNA`, `moreMoney`,
+`refillMotives`, `freeCam`, `setTime`, `spaceCreate`, `unlockSuperWeapons`,
+`setConsequenceTrait`, `freedom`, ...) and OpenSpore's own (`godMode`,
+`infiniteEnergy`, `dna 500`, `money`, `completeStage`, `gotoStage`, `smite`,
+`teleport`, `timeScale`, `stats`, `hud`, ...). Type `help` for the list. F10
+(or both sticks pressed on a controller) opens a debug menu with the same
+cheats as buttons. As in Spore, a cheat used in Space earns the Joker badge.
+
 ## Feedback
 
 Please report problems in [Issues](../../issues/new/choose), using one of two

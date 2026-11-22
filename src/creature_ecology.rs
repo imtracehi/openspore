@@ -1662,11 +1662,16 @@ pub struct CastingState {
 
 /// Advance the Creature stage's time of day (`GlobalTuning` day length and
 /// multipliers). Simulation time only, so a paused game stops the clock.
-pub fn advance_day_clock(time: Res<Time>, mut run: ResMut<crate::game::RunProgress>) {
+pub fn advance_day_clock(
+    time: Res<Time>,
+    mut run: ResMut<crate::game::RunProgress>,
+    speed: Option<Res<crate::cheats::DaySpeed>>,
+) {
     if !run.species_world.generated {
         return;
     }
-    let dt = time.delta_secs();
+    // `setTime -speed` (cheats) scales the clock.
+    let dt = time.delta_secs() * speed.map_or(1.0, |s| s.0);
     if dt <= 0.0 {
         return;
     }

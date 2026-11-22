@@ -34,6 +34,7 @@ mod bitmap;
 mod body;
 mod branding;
 mod controller;
+mod cheats;
 mod cell;
 mod cell_ai;
 mod cell_body;
@@ -5730,6 +5731,8 @@ fn main() {
 fn add_startup(app: &mut App) {
     // Xbox controller support (controller.rs): the window app and captures.
     app.add_plugins(controller::ControllerPlugin);
+    // The cheat console (Ctrl+Shift+C), debug menu (F10) and stats (cheats.rs).
+    app.add_plugins(cheats::CheatsPlugin);
     app.add_plugins(game_audio::GameAudioPlugin);
     app.add_plugins(cell_audio::CellAudioPlugin);
     app.add_plugins(audio_audit::AuditAudioPlugin);
@@ -6001,7 +6004,8 @@ fn configure_game(app: &mut App, saved: RunProgress) -> &mut App {
                 .run_if(editor::simulation_active)
                 .run_if(mechanical_creator::simulation_active)
                 .run_if(pause_menu::simulation_active)
-                .run_if(cinematics::simulation_active),
+                .run_if(cinematics::simulation_active)
+                .run_if(cheats::simulation_active),
         )
         .add_systems(
             Update,

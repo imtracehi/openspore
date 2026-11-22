@@ -2181,6 +2181,10 @@ pub struct CivCampaign {
     /// The superweapon was launched (`mbLauncedIWinWeapon`).
     #[serde(default)]
     pub superweapon_launched: bool,
+    /// The `unlockSuperWeapons` cheat: every power of the nation is unlocked
+    /// whatever the city count.
+    #[serde(default)]
+    pub superweapons_cheat: bool,
     /// Stats of the player's vehicle class designs (`civ_combat`).
     #[serde(default)]
     pub vehicle_stats: Vec<(Approach, VehicleDomain, crate::civ_combat::VehicleStats)>,
@@ -2594,7 +2598,8 @@ impl CivCampaign {
 
     /// The ability's flag is set (the retail `CanUseTool` test, 0xBF8B40).
     pub fn power_unlocked(&self, slot: PowerSlot) -> bool {
-        self.power_index(slot).is_some_and(|i| self.ability_flags()[i])
+        // `unlockSuperWeapons` (cheats) unlocks every power the nation has.
+        self.power_index(slot).is_some_and(|i| self.superweapons_cheat || self.ability_flags()[i])
     }
 
     /// Cities the slot's ability needs (VERIFIED 0xBEFBA0,
@@ -3002,6 +3007,8 @@ impl CivCampaign {
                 (w.data(), self.superweapon_cooldown, w.cost(self.rivals_left()))
             }
         };
+        // `unlockSuperWeapons` (global 0x168BD6C): no cost, no recharge.
+        let cost = if self.superweapons_cheat { 0.0 } else { cost };
         if cooldown > 0.0 {
             return Err(format!("{} recharging ({:.0}s)", data.name, cooldown));
         }
@@ -3190,7 +3197,8 @@ impl CivCampaign {
                 for c in &rivals {
                     self.take_city(*c, how, money);
                 }
-                self.superweapon_launched = true;
+                // The cheat does not mark the final weapon as used (0xBF8DA4).
+                self.superweapon_launched = !self.superweapons_cheat;
                 return Ok(PowerUse {
                     message: format!("{}: {} cities change hands", data.name, rivals.len()),
                     effect: None,
@@ -3200,11 +3208,12 @@ impl CivCampaign {
             }
         };
         *money -= cost;
+        let recharge = if self.superweapons_cheat { 0.0 } else { data.recharge };
         match slot {
-            PowerSlot::Cell => self.power_cell_cooldown = data.recharge,
-            PowerSlot::Creature => self.power_creature_cooldown = data.recharge,
-            PowerSlot::Tribal => self.power_tribal_cooldown = data.recharge,
-            PowerSlot::Superweapon => self.superweapon_cooldown = data.recharge,
+            PowerSlot::Cell => self.power_cell_cooldown = recharge,
+            PowerSlot::Creature => self.power_creature_cooldown = recharge,
+            PowerSlot::Tribal => self.power_tribal_cooldown = recharge,
+            PowerSlot::Superweapon => self.superweapon_cooldown = recharge,
         }
         Ok(PowerUse {
             message,

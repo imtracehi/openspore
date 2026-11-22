@@ -389,6 +389,7 @@ pub struct Screen<'w> {
     creator: Option<Res<'w, crate::editor::EditorState>>,
     mechanical: Option<Res<'w, crate::mechanical_creator::MechanicalCreator>>,
     space_view: Option<Res<'w, crate::space_view::SpaceView>>,
+    cheats: Option<Res<'w, crate::cheats::CheatState>>,
     pinned: Option<Res<'w, ContextOverride>>,
 }
 
@@ -400,6 +401,15 @@ impl Screen<'_> {
         let Some(stage) = &self.stage else {
             return ContextKind::None;
         };
+        // The cheat console takes typing; the debug menu is a menu.
+        if let Some(cheats) = &self.cheats {
+            if cheats.console_open {
+                return ContextKind::Typing;
+            }
+            if cheats.menu_open {
+                return ContextKind::Menu;
+            }
+        }
         if self.cinematics.as_ref().is_some_and(|c| c.is_playing()) {
             return ContextKind::Cinematic;
         }
